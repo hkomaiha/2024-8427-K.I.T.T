@@ -183,6 +183,7 @@ void Robot::TeleopPeriodic()
     
     if (secondaryController.GetRightTriggerAxis() > 0.2)
     {
+        m_shooterTop.Set(1);
         if (!firstSpeaker)
         {
             speakerTime = frc::Timer::GetFPGATimestamp();
