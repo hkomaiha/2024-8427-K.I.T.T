@@ -180,24 +180,12 @@ void Robot::TeleopPeriodic()
     }
 
     m_drive.ArcadeDrive(((-driveController.GetLeftY()) * speedMultiplier), ((driveController.GetRightX()) * turnMultiplier));
-    
+    m_shooterTop.Set(1);
+ 
     if (secondaryController.GetRightTriggerAxis() > 0.2)
     {
-        m_shooterTop.Set(1);
-        if (!firstSpeaker)
-        {
-            speakerTime = frc::Timer::GetFPGATimestamp();
-            firstSpeaker = true;
-        }
-        if (((frc::Timer::GetFPGATimestamp() - speakerTime) > 1_s))
-        {
             m_shooterLow.Set(1);
             m_intake.Set(1);
-        }
-    }
-    else if (secondaryController.GetRightTriggerAxis() < 0.2 && firstSpeaker)
-    {
-        firstSpeaker = false;
     }
     else if (secondaryController.GetRightBumper())
     {
@@ -217,16 +205,12 @@ void Robot::TeleopPeriodic()
         firstAmp = false;
     }
     else if (secondaryController.GetLeftTriggerAxis() > 0.2)
-    {
-        m_shooter.Set(-.7);
-    }
-    else if (secondaryController.GetLeftTriggerAxis() > 0.2)
     {                        // Add a proper condition here
         m_shooter.Set(-0.6); // Positive value for forward direction
     }
     else
     {
-        m_shooter.Set(0);
+        m_shooterLow.Set(0);
         m_intake.Set(0);
     }
 
